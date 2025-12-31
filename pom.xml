@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.alexanderdidio</groupId>
-    <artifactId>CustomDecentHolograms</artifactId>
-    <version>1.4</version>
+    <artifactId>AusHologramas</artifactId>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
-    <name>CustomDecentHolograms</name>
+    <name>AusHologramas</name>
 
     <description>Automates the creation and customization of player holograms.</description>
     <properties>

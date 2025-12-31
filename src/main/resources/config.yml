@@ -12,8 +12,26 @@
 #   spawn-lines: Set the display for new holograms
 #   spawn-location: Set the location for new holograms
 #
-# Assign cdh.amount.<number> permissions to groups and/or players
-# This will allow them to create x number of holograms themselves
+# limits:
+#   Define os limites de hologramas por permissão
+#   Use as permissões: cdh.limit.1, cdh.limit.3, cdh.limit.5, cdh.limit.10,
+#                      cdh.limit.25, cdh.limit.50, cdh.limit.unlimited
+#   O plugin verificará a maior permissão que o jogador possui
+#
+#   default-limit: Limite padrão para jogadores sem permissão específica
+#   enabled: Ativa/desativa o sistema de limites
+
+limits:
+  enabled: true
+  default-limit: 1
+  permissions:
+    cdh.limit.1: 1
+    cdh.limit.3: 3
+    cdh.limit.5: 5
+    cdh.limit.10: 10
+    cdh.limit.25: 25
+    cdh.limit.50: 50
+    cdh.limit.unlimited: -1  # -1 = ilimitado
 
 hologram:
   api: ""
