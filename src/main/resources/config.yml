@@ -4,14 +4,7 @@
 # hologram:
 #   apis:
 #     - GriefPrevention
-#     - GriefDefender
-#     - PlotSquared
 #     - WorldGuard
-#     - Towny
-#     - Lands
-#     - BentoBox
-#     - SuperiorSkyblock
-#     - IridiumSkyblock
 #   region: Only needed if using WorldGuard as API option
 #   max-lines: Limit the maximum lines a hologram can have
 #   max-characters: Limit the maximum characters on each line

@@ -1,4 +1,5 @@
 name: CustomDecentHolograms
+api: '1.0'
 version: '${project.version}'
 main: com.alexanderdidio.customdecentholograms.CustomDecentHolograms
 api-version: 1.13
@@ -7,14 +8,7 @@ depend:
   - DecentHolograms
 softdepend:
   - GriefPrevention
-  - GriefDefender
-  - PlotSquared
   - WorldGuard
-  - Towny
-  - Lands
-  - BentoBox
-  - SuperiorSkyblock2
-  - IridiumSkyblock
 authors: [powerdev]
 description: Automates the creation and customization of player holograms.
 website: vanted.net

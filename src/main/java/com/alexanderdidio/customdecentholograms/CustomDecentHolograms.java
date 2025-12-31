@@ -54,26 +54,11 @@ public class CustomDecentHolograms extends JavaPlugin {
     }
 
     private void loadAPIs() {
-        if (getServer().getPluginManager().isPluginEnabled("PlotSquared")) {
-            new PlotSquaredEvents(this);
-        }
         if (getServer().getPluginManager().isPluginEnabled("GriefDefender")) {
             new GriefDefenderEvents(this);
         }
-        if (getServer().getPluginManager().isPluginEnabled("Lands")) {
-            Bukkit.getPluginManager().registerEvents(new LandsEvents(this), this);
-        }
-        if (getServer().getPluginManager().isPluginEnabled("BentoBox")) {
-            Bukkit.getPluginManager().registerEvents(new BentoBoxEvents(this), this);
-        }
         if (getServer().getPluginManager().isPluginEnabled("GriefPrevention")) {
             Bukkit.getPluginManager().registerEvents(new GriefPreventionEvents(this), this);
-        }
-        if (getServer().getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
-            Bukkit.getPluginManager().registerEvents(new SuperiorSkyblockEvents(this), this);
-        }
-        if (getServer().getPluginManager().isPluginEnabled("IridiumSkyblock")) {
-            Bukkit.getPluginManager().registerEvents(new IridiumSkyblockEvents(this), this);
         }
     }
 
