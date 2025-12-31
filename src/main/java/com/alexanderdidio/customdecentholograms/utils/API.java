@@ -29,7 +29,12 @@ public class API {
     }
 
     public boolean checkLocation(Player player) {
-        switch (plugin.getAPIConfig().toLowerCase()) {
+        String apiConfig = plugin.getAPIConfig();
+        // If no API is configured, allow placement anywhere
+        if (apiConfig == null || apiConfig.trim().isEmpty()) {
+            return true;
+        }
+        switch (apiConfig.toLowerCase()) {
             case "griefprevention":
                 return getGriefPrevention(player);
             case "griefdefender":
@@ -43,6 +48,10 @@ public class API {
 
     public boolean validateAPI() {
         String apiConfig = plugin.getAPIConfig();
+        // Allow empty API config (no protection plugin)
+        if (apiConfig == null || apiConfig.trim().isEmpty()) {
+            return true;
+        }
         List<String> apis = new ArrayList<>();
         apis.add("griefprevention");
         apis.add("griefdefender");

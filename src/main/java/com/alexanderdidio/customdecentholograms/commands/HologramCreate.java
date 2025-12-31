@@ -87,6 +87,12 @@ public class HologramCreate implements CommandExecutor {
             hologramName = "uuid_" + uuid + "_" + 1;
         }
 
+        // Check if hologram already exists and delete it
+        Hologram existingHologram = DHAPI.getHologram(hologramName);
+        if (existingHologram != null) {
+            existingHologram.delete();
+        }
+
         lines.replaceAll(s -> s.replaceAll(Pattern.quote("{0}"), player.getName()));
         Hologram hologram = DHAPI.createHologram(hologramName, plugin.getLocation(), true, lines);
         DecentHologramsAPI.get().getHologramManager().registerHologram(hologram);

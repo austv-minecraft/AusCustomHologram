@@ -1,10 +1,11 @@
-# CustomDecentHolograms v1.1 configuration file
+# CustomDecentHolograms v1.4 configuration file
 # Report bugs and issues at vanted.net/discord
 #
 # hologram:
-#   apis:
-#     - GriefPrevention
-#     - WorldGuard
+#   api: Leave empty ("") to allow placement anywhere, or use:
+#        - griefprevention (GriefPrevention plugin)
+#        - griefdefender (GriefDefender plugin)
+#        - worldguard (WorldGuard plugin)
 #   region: Only needed if using WorldGuard as API option
 #   max-lines: Limit the maximum lines a hologram can have
 #   max-characters: Limit the maximum characters on each line
