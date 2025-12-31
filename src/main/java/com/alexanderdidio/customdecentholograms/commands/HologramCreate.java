@@ -66,13 +66,19 @@ public class HologramCreate implements CommandExecutor {
         // Check permission for allowed number of holograms
         int permissionAmount = 0;
 
-        for (int i = 1; i <= 200; i++) {
-            if (player.hasPermission("cdh.amount." + i)) {
-                permissionAmount = i;
+        // Check for unlimited permission first
+        if (player.hasPermission("cdh.limit.unlimited")) {
+            permissionAmount = -1; // unlimited
+        } else {
+            // Check numeric limits
+            for (int i = 1; i <= 200; i++) {
+                if (player.hasPermission("cdh.limit." + i)) {
+                    permissionAmount = i;
+                }
             }
         }
 
-        if (hologramAmount >= permissionAmount) {
+        if (permissionAmount != -1 && hologramAmount >= permissionAmount) {
             if (args.length == 1) {
                 message.send(sender, "playerMaximumHolograms");
             } else {

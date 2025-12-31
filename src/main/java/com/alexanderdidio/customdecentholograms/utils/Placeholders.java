@@ -40,9 +40,15 @@ public class Placeholders extends PlaceholderExpansion {
         int owned = plugin.getDatabase().countHolograms(uuid);
         int permission = 0;
         if (player != null) {
-            for (int i = 1; i <= 200; i++) {
-                if (player.hasPermission("cdh.amount." + i)) {
-                    permission = i;
+            // Check for unlimited permission first
+            if (player.hasPermission("cdh.limit.unlimited")) {
+                permission = -1; // unlimited
+            } else {
+                // Check numeric limits
+                for (int i = 1; i <= 200; i++) {
+                    if (player.hasPermission("cdh.limit." + i)) {
+                        permission = i;
+                    }
                 }
             }
         }
@@ -54,7 +60,9 @@ public class Placeholders extends PlaceholderExpansion {
                     return String.valueOf(permission);
                 }
             case "limit":
-                if (owned > permission) {
+                if (permission == -1) {
+                    return "True"; // unlimited always true
+                } else if (owned >= permission) {
                     return "False";
                 } else {
                     return "True";
