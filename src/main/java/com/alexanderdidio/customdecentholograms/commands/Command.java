@@ -1,14 +1,22 @@
 package com.alexanderdidio.customdecentholograms.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+
 import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
 import com.alexanderdidio.customdecentholograms.utils.Database;
 import com.alexanderdidio.customdecentholograms.utils.Message;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
-import org.bukkit.Bukkit;
-import org.bukkit.command.*;
-import org.bukkit.entity.Player;
 
-import java.util.*;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 
 public class Command implements CommandExecutor, TabCompleter {
     private final CustomDecentHolograms plugin;
@@ -91,6 +99,16 @@ public class Command implements CommandExecutor, TabCompleter {
             }
         }
 
+        if (args[0].equalsIgnoreCase("delete")) {
+            if (args.length == 2) {
+                HologramDelete hologramDeleteCommand = new HologramDelete(plugin);
+                return hologramDeleteCommand.onCommand(sender, command, label, args);
+            } else {
+                message.send(sender, "usageDelete");
+                return true;
+            }
+        }
+
         if (args[0].equalsIgnoreCase("list")) {
             if (args.length == 1) {
                 HologramList hologramListCommand = new HologramList(plugin);
@@ -129,6 +147,7 @@ public class Command implements CommandExecutor, TabCompleter {
             tab.add("edit");
             tab.add("add");
             tab.add("remove");
+            tab.add("delete");
             tab.add("list");
             tab.add("formats");
             tab.add("reload");
@@ -148,7 +167,11 @@ public class Command implements CommandExecutor, TabCompleter {
             return tab;
         }
 
-        if (args.length == 2 && Arrays.asList("move", "hide", "edit", "add", "remove").contains(cmd)) {
+        if (!(sender instanceof Player)) {
+            return tab;
+        }
+
+        if (args.length == 2 && Arrays.asList("move", "hide", "edit", "add", "remove", "delete").contains(cmd)) {
             player = (Player) sender;
             uuid = player.getUniqueId();
             for (int i = database.countHolograms(uuid); i > 0; i--) {
@@ -163,8 +186,10 @@ public class Command implements CommandExecutor, TabCompleter {
                 int index = Integer.parseInt(args[1])-1;
                 if (database.validateHologram(uuid, index)) {
                     Hologram hologram = database.getHologram(uuid, index);
-                    for (int lines = hologram.getPage(0).size(); lines > 0; lines--) {
-                        tab.add(String.valueOf(lines));
+                    if (hologram != null && hologram.getPage(0) != null) {
+                        for (int lines = hologram.getPage(0).size(); lines > 0; lines--) {
+                            tab.add(String.valueOf(lines));
+                        }
                     }
                 }
             }

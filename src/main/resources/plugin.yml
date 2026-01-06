@@ -14,7 +14,7 @@ softdepend: [GriefPrevention, WorldGuard, GriefDefender]
 commands:
   hg:
     description: Comando principal do CustomDecentHolograms
-    usage: /hg <create|move|edit|add|remove|list|formats|reload|hide>
+    usage: /hg <create|move|edit|add|remove|delete|list|formats|reload|hide>
     aliases: [hologram, holograma]
 
 permissions:
@@ -28,6 +28,7 @@ permissions:
       cdh.edit: true
       cdh.add: true
       cdh.remove: true
+      cdh.delete: true
       cdh.list: true
       cdh.formats: true
       cdh.hide: true
@@ -54,6 +55,9 @@ permissions:
     default: true
   cdh.remove:
     description: Remover linhas dos hologramas
+    default: true
+  cdh.delete:
+    description: Deletar hologramas
     default: true
   cdh.list:
     description: Listar hologramas próprios

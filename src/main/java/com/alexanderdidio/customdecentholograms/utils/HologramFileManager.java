@@ -37,4 +37,21 @@ public final class HologramFileManager {
             // Best-effort.
         }
     }
+
+    public static void deleteHologramFiles(CustomDecentHolograms plugin, String hologramName) {
+        try {
+            File pluginsDir = plugin.getDataFolder().getParentFile();
+            File hologramsRootDir = new File(new File(pluginsDir, "DecentHolograms"), "holograms");
+            File hologramsPlayersDir = new File(hologramsRootDir, HOLOGRAM_FOLDER_NAME);
+
+            Path rootFile = new File(hologramsRootDir, hologramName + ".yml").toPath();
+            Path playersFile = new File(hologramsPlayersDir, hologramName + ".yml").toPath();
+
+            // Delete both possible locations (best-effort).
+            Files.deleteIfExists(rootFile);
+            Files.deleteIfExists(playersFile);
+        } catch (Exception ignored) {
+            // Best-effort.
+        }
+    }
 }

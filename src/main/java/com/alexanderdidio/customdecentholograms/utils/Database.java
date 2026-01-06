@@ -37,6 +37,34 @@ public class Database {
         }
     }
 
+    public void deleteHologram(UUID uuid, int index) throws IOException {
+        if (!database.containsKey(uuid)) {
+            return;
+        }
+
+        List<Hologram> hologramList = database.get(uuid);
+        if (index < 0 || index >= hologramList.size()) {
+            return;
+        }
+
+        hologramList.remove(index);
+
+        List<String> hologramNames = dataConfig.getStringList(uuid + ".holograms");
+        if (index >= 0 && index < hologramNames.size()) {
+            hologramNames.remove(index);
+        }
+
+        if (hologramNames.isEmpty()) {
+            dataConfig.set(uuid + ".holograms", null);
+            dataConfig.set(uuid.toString(), null);
+            database.remove(uuid);
+        } else {
+            dataConfig.set(uuid + ".holograms", hologramNames);
+        }
+
+        dataConfig.save(dataFile);
+    }
+
     public int countHolograms(UUID uuid) {
         if (database.containsKey(uuid)) {
             return database.get(uuid).size();
@@ -81,9 +109,13 @@ public class Database {
             List<Hologram> hologramList = new ArrayList<>();
             for (String hologram : hologramSection) {
                 Hologram hologramEntry = DHAPI.getHologram(hologram);
-                hologramList.add(hologramEntry);
+                if (hologramEntry != null) {
+                    hologramList.add(hologramEntry);
+                }
             }
-            database.put(playerUUID, hologramList);
+            if (!hologramList.isEmpty()) {
+                database.put(playerUUID, hologramList);
+            }
         }
     }
 }
