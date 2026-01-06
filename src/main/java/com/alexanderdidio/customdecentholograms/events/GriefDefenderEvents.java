@@ -1,16 +1,22 @@
 package com.alexanderdidio.customdecentholograms.events;
 
-import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
-import com.griefdefender.api.GriefDefender;
-import com.griefdefender.api.claim.Claim;
-import com.griefdefender.api.event.*;
-import com.griefdefender.lib.kyori.event.EventBus;
-import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
-import org.bukkit.Location;
-
 import java.util.List;
 import java.util.UUID;
+
+import org.bukkit.Location;
+
+import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
+import com.alexanderdidio.customdecentholograms.utils.HologramFileManager;
+import com.griefdefender.api.GriefDefender;
+import com.griefdefender.api.claim.Claim;
+import com.griefdefender.api.event.Event;
+import com.griefdefender.api.event.EventManager;
+import com.griefdefender.api.event.RemoveClaimEvent;
+import com.griefdefender.api.event.TransferClaimEvent;
+import com.griefdefender.lib.kyori.event.EventBus;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 
 public class GriefDefenderEvents {
     private final CustomDecentHolograms plugin;
@@ -39,6 +45,7 @@ public class GriefDefenderEvents {
                 int z = location.getBlockZ();
                 if (claim.contains(x, y, z)) {
                     DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                    HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                     plugin.getMessage().send(uuid, "hologramRelocated");
                 }
             }
@@ -57,6 +64,7 @@ public class GriefDefenderEvents {
                 int z = location.getBlockZ();
                 if (claim.contains(x, y, z)) {
                     DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                    HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                     plugin.getMessage().send(oldOwner, "hologramRelocated");
                 }
             }

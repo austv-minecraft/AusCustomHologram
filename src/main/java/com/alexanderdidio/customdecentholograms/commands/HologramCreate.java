@@ -1,11 +1,10 @@
 package com.alexanderdidio.customdecentholograms.commands;
 
-import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
-import com.alexanderdidio.customdecentholograms.utils.Database;
-import com.alexanderdidio.customdecentholograms.utils.Message;
-import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.DecentHologramsAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+import java.util.regex.Pattern;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,10 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
-import java.util.regex.Pattern;
+import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
+import com.alexanderdidio.customdecentholograms.utils.Database;
+import com.alexanderdidio.customdecentholograms.utils.HologramFileManager;
+import com.alexanderdidio.customdecentholograms.utils.Message;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.DecentHologramsAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 
 public class HologramCreate implements CommandExecutor {
     private final CustomDecentHolograms plugin;
@@ -108,6 +111,10 @@ public class HologramCreate implements CommandExecutor {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        // Move the saved hologram file into a dedicated folder.
+        // DecentHolograms restricts hologram names, so we move the file instead of naming with '/'.
+        HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
 
         if (args.length != 1) {
             message.send(player, "hologramCreateSender", args[1]);

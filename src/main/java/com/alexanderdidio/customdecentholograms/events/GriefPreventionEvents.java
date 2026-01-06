@@ -1,18 +1,25 @@
 package com.alexanderdidio.customdecentholograms.events;
 
-import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
-import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
-import me.ryanhamshire.GriefPrevention.Claim;
-import me.ryanhamshire.GriefPrevention.ClaimPermission;
-import me.ryanhamshire.GriefPrevention.events.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
+import com.alexanderdidio.customdecentholograms.utils.HologramFileManager;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.ClaimPermission;
+import me.ryanhamshire.GriefPrevention.events.ClaimDeletedEvent;
+import me.ryanhamshire.GriefPrevention.events.ClaimExpirationEvent;
+import me.ryanhamshire.GriefPrevention.events.ClaimResizeEvent;
+import me.ryanhamshire.GriefPrevention.events.ClaimTransferEvent;
+import me.ryanhamshire.GriefPrevention.events.TrustChangedEvent;
 
 public class GriefPreventionEvents implements Listener {
     private final CustomDecentHolograms plugin;
@@ -31,6 +38,7 @@ public class GriefPreventionEvents implements Listener {
                 Location location = hologram.getLocation();
                 if (claim.contains(location, true, true)) {
                     DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                    HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                     plugin.getMessage().send(uuid, "hologramRelocated");
                 }
             }
@@ -47,6 +55,7 @@ public class GriefPreventionEvents implements Listener {
                 Location location = hologram.getLocation();
                 if (claim.contains(location, true, true)) {
                     DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                    HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                     plugin.getMessage().send(uuid, "hologramRelocated");
                 }
             }
@@ -65,6 +74,7 @@ public class GriefPreventionEvents implements Listener {
                 if (originalClaim.contains(location, true, true)) {
                     if (!resizedClaim.contains(location, true, true)) {
                         DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                        HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                         plugin.getMessage().send(uuid, "hologramRelocated");
                     }
                 }
@@ -82,6 +92,7 @@ public class GriefPreventionEvents implements Listener {
                 Location location = hologram.getLocation();
                 if (claim.contains(location, true, true)) {
                     DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                    HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                     plugin.getMessage().send(oldOwner, "hologramRelocated");
                 }
             }
@@ -100,6 +111,7 @@ public class GriefPreventionEvents implements Listener {
                     if (claim.contains(location, true, true)) {
                         if (!claim.hasExplicitPermission(uuid, ClaimPermission.Build)) {
                             DHAPI.moveHologram(hologram.getName(), plugin.getLocation());
+                            HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
                             plugin.getMessage().send(uuid, "hologramRelocated");
                         }
                     }

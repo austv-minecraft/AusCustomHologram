@@ -1,11 +1,7 @@
 package com.alexanderdidio.customdecentholograms.commands;
 
-import com.alexanderdidio.customdecentholograms.utils.API;
-import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
-import com.alexanderdidio.customdecentholograms.utils.Database;
-import com.alexanderdidio.customdecentholograms.utils.Message;
-import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -14,7 +10,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
+import com.alexanderdidio.customdecentholograms.utils.API;
+import com.alexanderdidio.customdecentholograms.utils.Database;
+import com.alexanderdidio.customdecentholograms.utils.HologramFileManager;
+import com.alexanderdidio.customdecentholograms.utils.Message;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 
 public class HologramMove implements CommandExecutor {
     private final CustomDecentHolograms plugin;
@@ -81,6 +84,7 @@ public class HologramMove implements CommandExecutor {
         }
 
         DHAPI.moveHologram(hologram.getName(), location);
+        HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
         message.send(sender, "hologramMove", args[1]);
         return true;
     }

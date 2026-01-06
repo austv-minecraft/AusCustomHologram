@@ -1,10 +1,7 @@
 package com.alexanderdidio.customdecentholograms.commands;
 
-import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
-import com.alexanderdidio.customdecentholograms.utils.Database;
-import com.alexanderdidio.customdecentholograms.utils.Message;
-import eu.decentsoftware.holograms.api.DHAPI;
-import eu.decentsoftware.holograms.api.holograms.Hologram;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +9,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
+import com.alexanderdidio.customdecentholograms.CustomDecentHolograms;
+import com.alexanderdidio.customdecentholograms.utils.Database;
+import com.alexanderdidio.customdecentholograms.utils.HologramFileManager;
+import com.alexanderdidio.customdecentholograms.utils.Message;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 
 public class HologramRemove implements CommandExecutor {
     private final CustomDecentHolograms plugin;
@@ -77,6 +80,7 @@ public class HologramRemove implements CommandExecutor {
         }
 
         DHAPI.removeHologramLine(hologram, line);
+        HologramFileManager.ensurePlayersFolderLater(plugin, hologram.getName(), 1L);
         message.send(sender, "hologramRemoveLine", hologramName);
         return true;
     }
